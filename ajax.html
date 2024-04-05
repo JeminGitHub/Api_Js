@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stylish Table</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #333;
+            color: #fff;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #ffc107; /* Yellow color for header */
+        }
+
+        tr:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+
+<table>
+    <thead>
+        <tr>
+            <th>userid</th>
+            <th>id</th>
+            <th>title</th>
+            <th>completed</th>
+        </tr>
+    </thead>
+    <tbody id="result">
+        <!-- Add your table rows here -->
+        <!-- <tr>
+            <td>1</td>
+            <td>101</td>
+            <td>Example Title 1</td>
+            <td>true</td>
+        </tr> -->
+       
+        <!-- Add more rows as needed -->
+    </tbody>
+</table>
+
+</body>
+
+<script>
+const http = new XMLHttpRequest();
+
+// create API connection
+http.open('GET', 'https://jsonplaceholder.typicode.com/posts');
+
+// send request
+http.send();
+
+console.log(http.readyState);
+
+http.onreadystatechange = () => {
+    console.log(http.readyState);
+    if (http.readyState === 4) {
+        // console.log('response received');
+        if(http.status>=200 && http.status<300){
+            console.log(http.responseText)
+            conversion = JSON.parse(http.responseText);
+            conversion.forEach(element => {
+                
+                result.innerHTML += `<tr>
+                    <td>${element.userId}</td>
+                    <td>${element.id}</td>
+                    <td>${element.title}</td>
+                    <td>${element.body}</td>
+                    </tr>`
+
+
+            });
+        }
+    } else {
+        console.log('no response');
+    }
+};
+
+
+</script>
+</html>
